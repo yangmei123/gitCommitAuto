@@ -1,6 +1,6 @@
 'use strict';
 const path = require('path');
-const execSync = require('child_process').execSync;
+const cp = require('child_process').execSync;
 const fs = require('fs');
 
 /**
@@ -15,8 +15,8 @@ const fs = require('fs');
  * @returns {boolean} 文件已经正确上传到指定git
  */
 
- let userName = execSync('git config --get user.name').toString().trim(); //git姓名
- let userEmail = execSync('git config --get user.email').toString().trim(); // git邮箱
+ const userName = cp('git config --get user.name').toString().trim(); // git姓名
+ const userEmail = cp('git config --get user.email').toString().trim(); // git邮箱
 
 const option = {
   gitRemoteUrl: 'https://github.com/xxx/xxx.git',
@@ -97,7 +97,6 @@ function copyTemplates(targetRootPath, tempPath) {
 }
 // 执行对应命令方法
 const runCommand = (command, args, cwd = distUpload) => {
-  const cp = require('child_process'); // 开启进程执行命令，安装依赖
   return new Promise((resolve, reject) => {
     // 执行要运行的命令
     const executedCommand = cp.spawn(command, args, {
